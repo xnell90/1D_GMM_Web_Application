@@ -114,20 +114,12 @@ window.onload = function () {
             svg.selectAll(".drawn-line").remove();
         }
 
-        if (event.key === 'p' || event.key === 'l') {
+        if (event.key === 'p') {
             // Clear all lines
             svg.selectAll(".drawn-line").remove();
 
             // console.log all points
             var e = getAllPointsCoordinates();
-
-            // if user presses 'l', fine-tune an existing model using the last 100 inserted samples
-            if (event.key == 'l') { 
-                var retrain = 0;
-                if (e.length > 100) { e = e.slice(e.length - 100, e.length);}
-            } else {
-                var retrain = 1;
-            }
 
             // read the value of id="epochs"
             var epochs = document.getElementById("epochs").value;
@@ -138,7 +130,6 @@ window.onload = function () {
             // create query string to /train endpoint with n_components, epochs, and retrain
             var query_string = "/train?n_components=" + n_components;
             query_string += "&epochs=" + epochs;
-            query_string += "&retrain=" + retrain;
 
             // access endpoint /train at localhost:8000, sending the data
             response = fetch(query_string, {

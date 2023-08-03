@@ -22,10 +22,8 @@ async def root():
 
     return HTMLResponse(content=html, status_code=200)
 
-model = None
-
 @app.post("/train")
-def train(n_components: int, epochs: int, points: Points, retrain: int):
+def train(n_components: int, epochs: int, points: Points):
     points = points.coordinates
 
     if len(points) <= 1:
@@ -36,9 +34,8 @@ def train(n_components: int, epochs: int, points: Points, retrain: int):
         point['x']
         for point in points
     ])
-
-    global model
-    if retrain or (model is None): model = GMMSimple(n_components=n_components)
+    
+    model = GMMSimple(n_components=n_components)
 
     losses_mean = train_model(
         model=model, 

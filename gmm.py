@@ -27,8 +27,7 @@ class GMMSimple(nn.Module):
         pi, mu, sigma = self.pi, self.mu, self.sigma
 
         pi = nn.Softmax(dim=-1)(pi)
-        mu = mu
-        sigma = nn.Softplus()(sigma)  # .clamp(1e-2, 1e2)
+        sigma = nn.Softplus()(sigma)
 
         return pi, mu, sigma
 
